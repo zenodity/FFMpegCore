@@ -727,4 +727,11 @@ public class ArgumentBuilderTest
         var pipePath = new OutputPipeArgument(new StreamPipeSink(Stream.Null)).PipePath;
         Assert.IsLessThan(_macOsMaxPipePathLength, pipePath.Length);
     }
+
+    [TestMethod]
+    public void Builder_BuildString_Null_Output()
+    {
+        var str = FFMpegArguments.FromFileInput("input.mp4").OutputToNull(opt => opt.WithCustomArgument("-filter_complex ebur128")).Arguments;
+        Assert.AreEqual("-i \"input.mp4\" -filter_complex ebur128 -f null -", str);
+    }
 }
